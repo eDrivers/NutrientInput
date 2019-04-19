@@ -8,7 +8,7 @@ library(magrittr)
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                                    DATA
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-load('./data/rawData/nutrientInput.RData')
+load('./data/rawData/nutrient.RData')
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -18,7 +18,7 @@ load('./data/rawData/nutrientInput.RData')
 # We therefore simply format the object for final export of the driver layer.
 
 # Change column name
-colnames(nutrient)[1] <- 'nutrientInput'
+colnames(nutrient)[1] <- 'NutrientInput'
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -32,5 +32,5 @@ save(nutrient, file = './Data/Driver/NutrientInput.RData')
 #                                 VISUALIZE DATA
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 png('./Figures/NutrientInput.png', width = 1280, height = 1000, res = 200, pointsize = 6)
-plot(nutrient[, 'nutrientInput'], border = 'transparent')
+plot(nutrient[, 'NutrientInput'], border = 'transparent')
 dev.off()

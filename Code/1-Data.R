@@ -2,6 +2,7 @@
 #                                     LIBRARIES
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 library(raster)
+library(sf)
 library(magrittr)
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -72,7 +73,31 @@ values(nutrient) <- values(nutrient)
 
 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+#                                    FORMAT DATA
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Modify projection
+# We use the Lambert projection as a default, which allows us to work in meters
+# rather than in degrees
+prj <- st_crs(32198)$proj4string
+nutrient <- projectRaster(nutrient, crs = prj)
+
+
+# We also work with polygons rather than rasters, so we need to transform raster
+# cells to polygons. Data could be left as rasters, but we elected to work with
+# a hexagonal grid and so have decided to convert everything in polygons.
+# Transform raster to polygon
+nutrient <- rasterToPolygons(nutrient)
+
+# Transform to sf object
+nutrient <- st_as_sf(nutrient)
+
+# Select only features with values > 0
+id0 <- nutrient$plumes_fert > 0
+nutrient <- nutrient[id0, ]
+
+
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                                  EXPORT DATA
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 # Export object as .RData
-save(nutrient, file = './data/rawData/nutrientStL.RData')
+save(nutrient, file = './data/rawData/nutrient.RData')
