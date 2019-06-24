@@ -24,6 +24,9 @@ colnames(nutrient)[1] <- 'NutrientInput'
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 #                                  EXPORT DATA
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# Change name for uniformity
+NutrientInput <- nutrient
+
 # Export object as .RData
 save(nutrient, file = './Data/Driver/NutrientInput.RData')
 
